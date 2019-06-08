@@ -1,7 +1,7 @@
 package me.zhengjie.rest;
 
 import me.zhengjie.aop.log.Log;
-import me.zhengjie.domain.Picture;
+import me.zhengjie.domain.FileInfo;
 import me.zhengjie.service.PictureService;
 import me.zhengjie.service.dto.PictureQueryCriteria;
 import me.zhengjie.utils.SecurityUtils;
@@ -21,12 +21,12 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
-public class PictureController {
+public class FileController {
 
     @Autowired
     private PictureService pictureService;
 
-    @Log("查询图片")
+    @Log("查询文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_SELECT')")
     @GetMapping(value = "/pictures")
     public ResponseEntity getRoles(PictureQueryCriteria criteria, Pageable pageable){
@@ -39,12 +39,12 @@ public class PictureController {
      * @return
      * @throws Exception
      */
-    @Log("上传图片")
+    @Log("上传文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_UPLOAD')")
     @PostMapping(value = "/pictures")
     public ResponseEntity upload(@RequestParam MultipartFile file){
         String userName = SecurityUtils.getUsername();
-        Picture picture = pictureService.upload(file,userName);
+        FileInfo picture = pictureService.upload(file,userName);
         Map map = new HashMap();
         map.put("errno",0);
         map.put("id",picture.getId());
@@ -57,7 +57,7 @@ public class PictureController {
      * @param id
      * @return
      */
-    @Log("删除图片")
+    @Log("删除文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
     @DeleteMapping(value = "/pictures/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
@@ -70,7 +70,7 @@ public class PictureController {
      * @param ids
      * @return
      */
-    @Log("删除图片")
+    @Log("删除文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
     @DeleteMapping(value = "/pictures")
     public ResponseEntity deleteAll(@RequestBody Long[] ids) {

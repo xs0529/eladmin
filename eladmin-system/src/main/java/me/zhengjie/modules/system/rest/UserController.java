@@ -1,8 +1,9 @@
 package me.zhengjie.modules.system.rest;
 
+import com.alipay.api.domain.Picture;
 import me.zhengjie.aop.log.Log;
 import me.zhengjie.config.DataScope;
-import me.zhengjie.domain.Picture;
+import me.zhengjie.domain.FileInfo;
 import me.zhengjie.domain.VerificationCode;
 import me.zhengjie.modules.system.domain.User;
 import me.zhengjie.exception.BadRequestException;
@@ -159,7 +160,7 @@ public class UserController {
      */
     @PostMapping(value = "/users/updateAvatar")
     public ResponseEntity updateAvatar(@RequestParam MultipartFile file){
-        Picture picture = pictureService.upload(file, SecurityUtils.getUsername());
+        FileInfo picture = pictureService.upload(file, SecurityUtils.getUsername());
         userService.updateAvatar(SecurityUtils.getUsername(),picture.getUrl());
         return new ResponseEntity(HttpStatus.OK);
     }

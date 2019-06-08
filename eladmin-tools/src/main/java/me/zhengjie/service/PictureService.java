@@ -1,6 +1,6 @@
 package me.zhengjie.service;
 
-import me.zhengjie.domain.Picture;
+import me.zhengjie.domain.FileInfo;
 import me.zhengjie.service.dto.PictureQueryCriteria;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,7 +30,7 @@ public interface PictureService {
      * @return
      */
     @CacheEvict(allEntries = true)
-    Picture upload(MultipartFile file, String username);
+    FileInfo upload(MultipartFile file, String username);
 
     /**
      * 根据ID查询
@@ -38,14 +38,14 @@ public interface PictureService {
      * @return
      */
     @Cacheable(key = "#p0")
-    Picture findById(Long id);
+    FileInfo findById(Long id);
 
     /**
      * 删除图片
      * @param picture
      */
     @CacheEvict(allEntries = true)
-    void delete(Picture picture);
+    void delete(FileInfo picture);
 
     /**
      * 删除图片

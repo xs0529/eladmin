@@ -15,8 +15,8 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name = "picture")
-public class Picture implements Serializable {
+@Table(name = "file")
+public class FileInfo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,12 @@ public class Picture implements Serializable {
 
     private String width;
 
+    @Column(name = "file_type")
+    private Long fileType;
+
+    @Column(name = "upload_type")
+    private Long uploadType;
+
     /**
      * delete URl
      */
@@ -44,10 +50,4 @@ public class Picture implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
-    @Override
-    public String toString() {
-        return "Picture{" +
-                "filename='" + filename + '\'' +
-                '}';
-    }
 }

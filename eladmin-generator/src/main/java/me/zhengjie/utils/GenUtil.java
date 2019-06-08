@@ -255,7 +255,7 @@ public class GenUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            writer.close();
+                writer.close();
         }
     }
 }

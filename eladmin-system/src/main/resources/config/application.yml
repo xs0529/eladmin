@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 1000
 
 spring:
   profiles:
@@ -10,7 +10,14 @@ spring:
     redis:
       repositories:
         enabled: false
-
+  datasource:
+    hikari:
+      connection-timeout: 400000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximumPoolSize: 25
+      minimum-idle: 5
+    type: com.zaxxer.hikari.HikariDataSource
   #配置 Jpa
   jpa:
     properties:
@@ -23,7 +30,7 @@ spring:
     database: 0
     host: 127.0.0.1
     port: 6379
-    password:
+    password: 123456
     #连接超时时间
     timeout: 5000
 

@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import me.zhengjie.domain.Picture;
+import me.zhengjie.domain.FileInfo;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.repository.PictureRepository;
 import me.zhengjie.service.PictureService;
@@ -46,7 +46,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public Picture upload(MultipartFile multipartFile, String username) {
+    public FileInfo upload(MultipartFile multipartFile, String username) {
         File file = FileUtil.toFile(multipartFile);
 
         HashMap<String, Object> paramMap = new HashMap<>();
@@ -55,12 +55,12 @@ public class PictureServiceImpl implements PictureService {
         String result= HttpUtil.post(ElAdminConstant.Url.SM_MS_URL, paramMap);
 
         JSONObject jsonObject = JSONUtil.parseObj(result);
-        Picture picture = null;
+        FileInfo picture = null;
         if(!jsonObject.get(CODE).toString().equals(SUCCESS)){
             throw new BadRequestException(jsonObject.get(MSG).toString());
         }
         //转成实体类
-        picture = JSON.parseObject(jsonObject.get("data").toString(), Picture.class);
+        picture = JSON.parseObject(jsonObject.get("data").toString(), FileInfo.class);
         picture.setSize(FileUtil.getSize(Integer.valueOf(picture.getSize())));
         picture.setUsername(username);
         picture.setFilename(FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename())+"."+FileUtil.getExtensionName(multipartFile.getOriginalFilename()));
@@ -72,15 +72,15 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public Picture findById(Long id) {
-        Optional<Picture> picture = pictureRepository.findById(id);
+    public FileInfo findById(Long id) {
+        Optional<FileInfo> picture = pictureRepository.findById(id);
         ValidationUtil.isNull(picture,"Picture","id",id);
         return picture.get();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Picture picture) {
+    public void delete(FileInfo picture) {
         try {
             String result= HttpUtil.get(picture.getDelete());
             pictureRepository.delete(picture);
