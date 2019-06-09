@@ -33,7 +33,7 @@ public class FileInfo implements Serializable {
     private String width;
 
     @Column(name = "file_type")
-    private Long fileType;
+    private String fileType;
 
     @Column(name = "upload_type")
     private Long uploadType;
@@ -45,6 +45,9 @@ public class FileInfo implements Serializable {
     private String delete;
 
     private String username;
+
+    @Column(name = "old_name")
+    private String oldName;
 
     @CreationTimestamp
     @Column(name = "create_time")

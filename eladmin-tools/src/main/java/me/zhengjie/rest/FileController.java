@@ -28,7 +28,7 @@ public class FileController {
 
     @Log("查询文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_SELECT')")
-    @GetMapping(value = "/pictures")
+    @GetMapping(value = "/file")
     public ResponseEntity getRoles(PictureQueryCriteria criteria, Pageable pageable){
         return new ResponseEntity(pictureService.queryAll(criteria,pageable),HttpStatus.OK);
     }
@@ -41,7 +41,7 @@ public class FileController {
      */
     @Log("上传文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_UPLOAD')")
-    @PostMapping(value = "/pictures")
+    @PostMapping(value = "/file")
     public ResponseEntity upload(@RequestParam MultipartFile file){
         String userName = SecurityUtils.getUsername();
         FileInfo picture = pictureService.upload(file,userName);
@@ -59,7 +59,7 @@ public class FileController {
      */
     @Log("删除文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
-    @DeleteMapping(value = "/pictures/{id}")
+    @DeleteMapping(value = "/file/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         pictureService.delete(pictureService.findById(id));
         return new ResponseEntity(HttpStatus.OK);
@@ -72,7 +72,7 @@ public class FileController {
      */
     @Log("删除文件")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
-    @DeleteMapping(value = "/pictures")
+    @DeleteMapping(value = "/file")
     public ResponseEntity deleteAll(@RequestBody Long[] ids) {
         pictureService.deleteAll(ids);
         return new ResponseEntity(HttpStatus.OK);

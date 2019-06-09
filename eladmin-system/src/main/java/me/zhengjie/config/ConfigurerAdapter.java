@@ -1,5 +1,6 @@
 package me.zhengjie.config;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -32,7 +33,7 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedOrigins("*")
                 .allowedMethods("GET","POST","PUT","DELETE");
-
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
     }
 
 // 可解决Long 类型在 前端精度丢失的问题， 如不想全局 直接添加注解 @JsonSerialize(using= ToStringSerializer.class) 到相应的字段
